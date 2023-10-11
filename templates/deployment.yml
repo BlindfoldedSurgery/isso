@@ -40,7 +40,13 @@ spec:
           volumeMounts:
             - mountPath: {{ .Values.volume.path }}
               name: {{ .Values.volume.name }}
+            - mountPath: /config/isso.cfg
+              name: config
+              subPath: config
       volumes:
       - name: {{ .Values.volume.name }}
         persistentVolumeClaim:
           claimName: {{ .Values.claim.name }}
+      - name: config
+        configMap:
+        defaultMode: 420
