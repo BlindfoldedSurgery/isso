@@ -7,4 +7,6 @@ data:
   isso.cfg: |
     [general]
     dbpath = /db/comments.db
-    host = https://eiersaft.me
+    host =
+        http://localhost:1111
+        https://eiersaft.me
