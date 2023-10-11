@@ -42,7 +42,7 @@ spec:
               name: {{ .Values.volume.name }}
             - mountPath: /config/isso.cfg
               name: config
-              subPath: config
+              subPath: isso.cfg
       volumes:
       - name: {{ .Values.volume.name }}
         persistentVolumeClaim:
