@@ -1,0 +1,6 @@
+apiVersion: v2
+name: isso-comments
+description: comments for eiersaft powered by isso
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap.name }}
+  namespace: {{ .Values.namespace.name }}
+data:
+  config: |
+    [general]
+    dbpath = /db/comments.db
+    host = https://eiersaft.me

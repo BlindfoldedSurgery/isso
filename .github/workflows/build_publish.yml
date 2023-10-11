@@ -1,0 +1,37 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request: { }
+
+jobs:
+  lint:
+    name: "helm lint"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: BlindfoldedSurgery/github-action-helm@v0.3.0
+        with:
+          subcommand: lint
+          path: .
+          strict: true
+          namespace: eiersaft
+
+  deploy:
+    name: "Publish to k8s"
+    runs-on: ubuntu-latest
+    concurrency: production
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - name: install helm chart
+        uses: BlindfoldedSurgery/github-action-helm@v0.3.0
+        with:
+          subcommand: upgrade
+          ref: .
+          release_name: isso
+          namespace: eiersaft
+          atomic: true
+          install: true
+          kubeconfig: ${{ secrets.KUBECONFIG_RAW }}

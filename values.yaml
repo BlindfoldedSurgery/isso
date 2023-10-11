@@ -1,0 +1,42 @@
+namespace:
+  name: eiersaft
+
+deployment:
+  name: isso
+  image: ghcr.io/isso-comments/isso:0.13.0
+  imagePullPolicy: IfNotPresent
+  revisionHistoryLimit: 1
+  replicas: 1
+  labels:
+    app: isso
+  requests:
+    cpu: 100m
+    memory: 100Mi
+  limit:
+    cpu: 500m
+    memory: 500Mi
+
+configmap:
+  name: isso
+
+ingress:
+  name: isso
+  hosts:
+    - name: comments.eiersaft.me
+  secret: tls-eiersaft-comments
+  issuer: letsencrypt-issuer
+
+service:
+  name: isso
+  port: 8080
+  targetPort: 8080
+  appSelector: isso
+
+volume:
+  name: comments
+  path: /db
+
+claim:
+  name: comments
+  size: 1Gi
+  accessMode: ReadWriteOnce
